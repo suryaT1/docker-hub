@@ -1,0 +1,74 @@
+docker - https://youtu.be/U52aK9bjuwI?si=bizO2Yh9UyXe9uwU
+
+cmnds:
+------->
+
+docker  ps      #showing running containers
+docker ps -a    #Shows all containers
+docker ps -aq   #Shows only container IDs
+docker run centos  #Creates a new container and when user exists it will exists
+docker run -d --name app2 nginx:latest   #Starts a new container in detached mode (-d)
+docker stop app2   #Stops the container
+docker stop $(docker ps -aq) #Stops all containers
+docker rm $(docker ps -aq)   #Removes all containers (stopped or exited)
+docker run --rm -d --name app1 nginx:latest   #Runs a container that deletes itself after stopping
+docker stop app1    #Stops app1 container, and it will be removed automatically due to --rm
+docker run --rm -d --name frontend -p 8000:80 nginx:latest #Runs Nginx and maps container port 80 to host port 8000
+docker logs -f frontend  #Shows real-time logs from the frontend container
+docker inspect frontend  #Detailed JSON output about the container
+docker network ls    #Lists all the Docker networks on your system.
+docker exec -it app1 bash  #Runs an interactive bash shell inside the running container named app1
+docker network create custom --driver bridge #Creates a new Docker network named custom using the bridge driver.
+docker volume create mongodb
+docker run --rm -d --name mongodb -v mongodb:/data/db -p 27017:27017 mongo:latest
+docker attach <containerID>   #means you attach your terminal session directly to a running container.
+docker run -e APP_Color=blue simple-webapp-color  # -e stands to passing environment variables
+docker build . -t container1
+
+
+Topics:
+--------
+
+containers
+volumes
+Images
+bind mounts - A bind mount is a type of volume where you specify an exact path on the host machine that gets mounted 
+             (linked) to a path inside the container.
+portainer  - Portainer is a lightweight, web-based Docker management UI 
+Dangling images - images not tagged and not used by any container
+prune -  This will removes 
+                   Stopped containers
+				   Dangling images
+				   Unused networks
+				   Build cache
+compose - collection of multiple containers
+links  - connection between two containers
+
+
+
+DOCKER-COMPOSE:
+-------------------->
+
+docker-compose up	      Builds (if needed) and starts all services defined in docker-compose.yml.
+docker-compose up -d	  Same as above, but runs containers in the background (detached mode).
+docker-compose down	      Stops and removes containers, networks, volumes, and images created by up.
+docker-compose stop	      Stops running containers without removing them.
+docker-compose start	  Starts previously stopped containers.
+docker-compose restart	  Restarts all services.
+
+docker-compose build	          Builds images defined in docker-compose.yml.
+docker-compose build --no-cache	  Builds without using the cache.
+docker-compose pull	              Pulls service images from a registry.
+docker-compose push				  Pushes service images to a registry (if configured)
+
+
+docker-compose ps			Lists containers managed by the current Compose project.
+docker-compose logs			Displays logs from containers.
+docker-compose logs -f		Follows logs (like tail -f).
+docker-compose top			Displays running processes in containers.
+docker-compose config		Validates and shows the full configuration file (useful for debugging).
+
+
+docker-compose exec <service> <command>	Runs a command inside a running service container. Example: docker-compose exec web sh
+docker-compose run <service> <command>	Runs a new container for a one-off command (not for long-running services). Example: docker-compose run app python manage.py migrate
+
